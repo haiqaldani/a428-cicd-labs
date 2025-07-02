@@ -1,38 +1,19 @@
 node {
-    docker.image('node:lts-buster-slim').withRun('-p 3000:3000') { builder ->
-
+    docker.image('node:lts-buster-slim').inside('-p 3000:3000') {
         env.CI = 'true'
 
         stage('Build') {
-            echo 'Starting Build stage...'
-            
-            builder.inside {
-                sh 'npm install'
-            }
-            echo 'Build stage finished.'
+            sh 'npm install'
         }
 
         stage('Test') {
-            echo 'Starting Test stage...'
-            
-            builder.inside {
-                sh '/jenkins/scripts/test.sh'
-            }
-            echo 'Test stage finished.'
+            sh '/jenkins/scripts/test.sh'
         }
 
         stage('Deliver') {
-            echo 'Starting Deliver stage...'
-           
-            builder.inside {
-                sh '/jenkins/scripts/deliver.sh'
-            }
+            sh '/jenkins/scripts/deliver.sh'
 
-            builder.inside {
-                sh '/jenkins/scripts/kill.sh'
-            }
-            echo 'Deliver stage finished.'
+            sh '/jenkins/scripts/kill.sh'
         }
-    } 
-    echo 'Pipeline completed!'
+    }
 }
