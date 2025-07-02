@@ -16,7 +16,7 @@ node {
             echo 'Starting Test stage...'
             
             builder.inside {
-                sh './jenkins/scripts/test.sh'
+                sh '/jenkins/scripts/test.sh'
             }
             echo 'Test stage finished.'
         }
@@ -25,11 +25,11 @@ node {
             echo 'Starting Deliver stage...'
            
             builder.inside {
-                sh './jenkins/scripts/deliver.sh'
+                sh '/jenkins/scripts/deliver.sh'
             }
 
             builder.inside {
-                sh './jenkins/scripts/kill.sh'
+                sh '/jenkins/scripts/kill.sh'
             }
             echo 'Deliver stage finished.'
         }
