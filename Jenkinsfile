@@ -64,6 +64,10 @@ pipeline {
                     sh "aws s3 sync --acl public-read build s3://${env.AWS_S3_BUCKET}/"
 
                     echo 'Deployment package uploaded to S3.'
+
+                    echo 'Waiting for 1 minute to keep the application running...'
+                    sleep(time: 60, unit: 'SECONDS')
+                    echo 'Wait complete. Proceeding to finish pipeline.'
                 }
             }
         }
